@@ -1,0 +1,17 @@
+{
+    "name": "dylan/2.1",
+    "autoload": {
+        "psr-4": {
+            "Dylan\\21\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DylanVTW",
+            "email": "9022218@student.zadkine.nl"
+        }
+    ],
+    "require": {
+        "smarty/smarty": "^5.4"
+    }
+}
