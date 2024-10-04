@@ -1,6 +1,7 @@
 <?php
 
-class ligma{
+class ligma
+{
 
 };
 

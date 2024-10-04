@@ -10,8 +10,7 @@ class Product{
     {
         return number_format($this->price, decimals:2);
     }
-}
-
+};
 
 $game1 = new Product();
 $game1->name = "fifa 2023";

@@ -56,10 +56,9 @@ $account->withdraw(15.00);
 
 $account->deposit(20.00);
 
-// Probeer $100 op te nemen
+
 $account->withdraw(100.00);
 
-// Verander het accountnummer
 $account->setAccountNumber("98765");
 echo "Uw bankaccount nummer is gewijzigd in: " . $account->getAccountNumber() . "<br>";
 

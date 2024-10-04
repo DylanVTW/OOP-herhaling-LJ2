@@ -12,6 +12,11 @@ class Product{
     }
 }
 
+public function setName($name)
+{
+    $this->name = $name;
+}
+
 
 $game1 = new Product();
 $game1->name = "fifa 2023";
