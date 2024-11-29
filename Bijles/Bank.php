@@ -17,7 +17,7 @@ class Bank
         }
         $info = "lijst van klanten: <br>";
         foreach($this->customers as $customer){
-            $info .= "klant : {$customer->name} Accountnumber : {$customer-number} Balance {$customer->balance}<br>";
+            $info .= "klant : {$customer->name} Accountnumber : {$customer->number} Balance {$customer->balance}<br>";
         }
         return $info;
     }
