@@ -8,6 +8,9 @@
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/templates/CSS" />
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/templates/JS" />
+      <excludeFolder url="file://$MODULE_DIR$/Bijles/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/Bijles/vendor/smarty/smarty" />
+      <excludeFolder url="file://$MODULE_DIR$/Bijles/vendor/symfony/polyfill-mbstring" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

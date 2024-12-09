@@ -40,6 +40,10 @@ class BankAccount
         return $this->balance;
     }
 
+    public function getName(): string
+{
+    return $this->name;
+}
     private function isValidAccountNumber(string $accountnumber): bool
     {
         return str_starts_with($accountnumber, needle: 'NL') && strlen($accountnumber) === 18;
