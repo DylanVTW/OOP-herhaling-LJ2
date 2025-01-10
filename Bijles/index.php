@@ -1,20 +1,20 @@
 <?php
 
-class BankAccount{
+//declare(strict_types=1)
 
-    public $name;
+require_once 'BankAccount.php';
+require_once 'Bank.php';
+require_once 'vendor/autoload.php';
+use Smarty\Smarty;
 
-    public $accountnumber; 
+$smarty = new Smarty();
+$smarty->setTemplateDir('templates/');
+$smarty->setCompileDir('templates_c/');
 
-    public $balance;
+$smarty->display('form.tpl');
 
-
-    public function __construct($name, $accountnumber, $balance){
-        $this->name = $name;
-        $this->accountnumber = $accountnumber;
-        $this->balance = $balance;
-    }
-
-
-    
-}
+//$ing = new Bank();
+//$sigmund = new BankAccount('Sigmund', 6969, 10050);
+//
+//
+//$ing->addCustomer($sigmund);

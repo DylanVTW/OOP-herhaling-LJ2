@@ -1,0 +1,10 @@
+{
+    "name": "dylan/inheritance",
+    "autoload": {
+        "psr-4": {
+            "\\Inheritance\\": "src/"
+        }
+    },  
+
+    "require": {}
+}
