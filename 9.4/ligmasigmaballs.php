@@ -1,15 +1,22 @@
 <?php
 
 
-class Watchlist
+class Player
 {
 
-      public array $games = [];
+    public string $name;  
+    public array $games = [];
 
 
-      public function addGame($game)
+      public function __construct(string $game)
       {
-            $this->games[] = $game;
+            $this->name[] = $name;
+            array_push()
       }
 
+
+         public function addGame(Game $game)
+{
+    $this->games[] = $game;
+}
 }
