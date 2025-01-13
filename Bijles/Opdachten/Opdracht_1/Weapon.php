@@ -2,22 +2,19 @@
 
 class Weapon
 {
-    private string $name;
-    private int $damage;
-    private int $range;
+    public $name;
+    public $damage;
+    public $range;
 
 
-    function __construct(string $name, int $damage, int $range)
+    public function __construct($name, $damage, $range)
     {
         $this->name = $name;
         $this->damage = $damage;
         $this->range = $range;
     }
 
-    public function getWeaponInfo(): string
-    {
-        return "Het wapen {$this->name} doet {$this->damage} schade en heeft een {$this->range} bereikt";
-    }
+
     public function setName(string $newName): void
     {
         $this->name = $newName;
@@ -37,6 +34,9 @@ class Weapon
     {
         return $this->damage;
     }
+
+    public function getWeaponInfo(): string
+    {
+        return "Het wapen {$this->name} doet {$this->damage} schade en heeft een {$this->range} bereikt";
+    }
 }
-
-
