@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr18;
 
 class BankAccount
 {
-    private string $accountNumber;
-    private string $accountHolder;
-    private float $balance;
-    private string $accountType;
+    public string $accountNumber;
+    public string $accountHolder;
+    public float $balance;
+    public string $accountType;
 
     public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
     {
@@ -57,4 +57,3 @@ class BankAccount
     }
 
 }
-

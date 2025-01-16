@@ -1,21 +1,20 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr19;
 
 class BankAccount
 {
-    private string $accountNumber;
-    private string $accountHolder;
-    private float $balance;
-    private string $accountType;
+    public string $accountNumber;
+    public string $accountHolder;
+    public float $balance;
+    protected string $accountType;
 
     public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
     {
         $this->accountNumber = $accountNumber;
         $this->accountHolder = $accountHolder;
         $this->balance = $balance;
-        $this->accountType = $accountType;
     }
 
     public function getAccountNumber(): string
@@ -33,10 +32,6 @@ class BankAccount
         return $this->balance;
     }
 
-    public function getAccountType(): string
-    {
-        return $this->accountType;
-    }
 
     public function deposit(float $amount)
     {
@@ -57,4 +52,3 @@ class BankAccount
     }
 
 }
-

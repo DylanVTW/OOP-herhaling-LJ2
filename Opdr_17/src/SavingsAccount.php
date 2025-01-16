@@ -1,21 +1,24 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr17;
 
-class BankAccount
+class SavingsAccount
 {
     private string $accountNumber;
     private string $accountHolder;
     private float $balance;
     private string $accountType;
 
-    public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
+    private float $interestRate;
+
+    public function setAccount2(string $accountNumber, string $accountHolder, float $balance, string $accountType, float $interestRate) :void
     {
         $this->accountNumber = $accountNumber;
         $this->accountHolder = $accountHolder;
         $this->balance = $balance;
         $this->accountType = $accountType;
+        $this->interestRate = $interestRate;
     }
 
     public function getAccountNumber(): string
@@ -38,6 +41,11 @@ class BankAccount
         return $this->accountType;
     }
 
+    public function getInterestRate(): float
+    {
+        return $this->interestRate;
+    }
+
     public function deposit(float $amount)
     {
         if ($amount >0) {
@@ -57,4 +65,3 @@ class BankAccount
     }
 
 }
-

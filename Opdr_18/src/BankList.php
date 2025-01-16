@@ -1,12 +1,12 @@
 <?php
 
-namespace Opdr16;
+namespace Opdr18;
 
 class BankList
 {
     private array $bankAccounts = [];
 
-    public function addAccount(BankAccount $account)
+    public function addAccount($account)
     {
         $this->bankAccounts[] = $account;
     }

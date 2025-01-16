@@ -1,21 +1,21 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr21;
 
 class BankAccount
 {
-    private string $accountNumber;
-    private string $accountHolder;
-    private float $balance;
-    private string $accountType;
+    public string $accountNumber;
+    public string $accountHolder;
+    public float $balance;
+    protected string $accountType;
 
-    public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
+    public function __construct(string $accountNumber, string $accountHolder, float $balance, string $accountType)
     {
         $this->accountNumber = $accountNumber;
         $this->accountHolder = $accountHolder;
         $this->balance = $balance;
-        $this->accountType = $accountType;
+        $this->accountType = $accountType;  
     }
 
     public function getAccountNumber(): string
@@ -32,29 +32,26 @@ class BankAccount
     {
         return $this->balance;
     }
-
-    public function getAccountType(): string
-    {
-        return $this->accountType;
-    }
-
     public function deposit(float $amount)
     {
-        if ($amount >0) {
+        if ($amount > 0) {
             $this->balance += $amount;
         } else {
-            return('Bedrag moet positief zijn');
+            return 'Bedrag moet positief zijn';
         }
     }
 
     public function withdraw(float $amount)
     {
-        if ($amount > 0) {
+        if ($this->validateWithdrawal($amount)) {
             $this->balance -= $amount;
         } else {
-            return('Bedrag moet positief zijn en mag niet groter zijn dan de balans');
+            return 'Saldo kan niet negatief worden na opname';
         }
     }
 
+    protected function validateWithdrawal(float $amount): bool
+    {
+        return $this->balance - $amount >= 0; 
+    }
 }
-

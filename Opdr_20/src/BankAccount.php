@@ -1,21 +1,20 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr20;
 
 class BankAccount
 {
-    private string $accountNumber;
-    private string $accountHolder;
-    private float $balance;
-    private string $accountType;
+    public string $accountNumber;
+    public string $accountHolder;
+    public float $balance;
+    protected string $accountType;
 
     public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
     {
         $this->accountNumber = $accountNumber;
         $this->accountHolder = $accountHolder;
         $this->balance = $balance;
-        $this->accountType = $accountType;
     }
 
     public function getAccountNumber(): string
@@ -33,10 +32,6 @@ class BankAccount
         return $this->balance;
     }
 
-    public function getAccountType(): string
-    {
-        return $this->accountType;
-    }
 
     public function deposit(float $amount)
     {
@@ -50,11 +45,20 @@ class BankAccount
     public function withdraw(float $amount)
     {
         if ($amount > 0) {
-            $this->balance -= $amount;
+           if( $this->validateWithdrawal($amount)) 
+           {$this->balance-= $amount;}
         } else {
             return('Bedrag moet positief zijn en mag niet groter zijn dan de balans');
         }
     }
 
-}
+    protected function validateWithdrawal(float $amount): bool
+    {
+        if ($amount > 0 && $amount <= $this->balance) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+}

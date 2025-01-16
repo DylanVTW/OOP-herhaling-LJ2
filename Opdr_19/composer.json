@@ -1,0 +1,10 @@
+{
+    "name": "dylan/opdr_19",
+    "autoload": {
+        "psr-4": {
+            "Opdr19\\": "src/"
+        }
+    },
+    
+    "require": {}
+}

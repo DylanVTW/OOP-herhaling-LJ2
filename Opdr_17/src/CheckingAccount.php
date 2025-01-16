@@ -1,21 +1,24 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr17;
 
-class BankAccount
+class CheckingAccount
 {
     private string $accountNumber;
     private string $accountHolder;
     private float $balance;
     private string $accountType;
 
-    public function setAccount(string $accountNumber, string $accountHolder, float $balance, string $accountType) :void
+    private float $overdraftLimit;
+
+    public function setAccount3(string $accountNumber, string $accountHolder, float $balance, string $accountType, float $overdraftLimit) :void
     {
         $this->accountNumber = $accountNumber;
         $this->accountHolder = $accountHolder;
         $this->balance = $balance;
         $this->accountType = $accountType;
+        $this->overdraftLimit = $overdraftLimit;
     }
 
     public function getAccountNumber(): string
@@ -38,6 +41,11 @@ class BankAccount
         return $this->accountType;
     }
 
+    public function getOverdraftLimit(): float
+    {
+        return $this->overdraftLimit;
+    }
+
     public function deposit(float $amount)
     {
         if ($amount >0) {
@@ -57,4 +65,3 @@ class BankAccount
     }
 
 }
-

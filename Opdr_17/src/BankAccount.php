@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Opdr16;
+namespace Opdr17;
 
 class BankAccount
 {
@@ -57,4 +57,3 @@ class BankAccount
     }
 
 }
-
