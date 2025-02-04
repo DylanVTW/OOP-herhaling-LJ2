@@ -1,0 +1,10 @@
+{
+    "name": "dylan/opdr_23_24",
+    "autoload": {
+        "psr-4": {
+            "Bank\\": "src/"
+        }
+    },
+    
+    "require": {}
+}

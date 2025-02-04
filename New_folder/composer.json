@@ -1,0 +1,9 @@
+{
+    "name": "dylan/beoordelingsopdracht_3",
+    "autoload": {
+        "psr-4": {
+            "Beoordelingsopdracht3\\": "src/"
+        }
+    },
+    "require": {}
+}

@@ -1,0 +1,12 @@
+{
+    "name": "dylan/opdr_23_24",
+    "autoload": {
+        "psr-4": {
+            "BankApp\\": "src/"
+        }
+    },
+    
+    "require-dev": {
+        "phpstan/phpstan": "^2.1"
+    }
+}
