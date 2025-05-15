@@ -1,0 +1,15 @@
+{
+    "name": "game/rpg-game",
+    "autoload": {
+        "psr-4": {
+            "Game\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DylanVTW",
+            "email": "9022218@student.zadkine.nl"
+        }
+    ],
+    "require": {}
+}
