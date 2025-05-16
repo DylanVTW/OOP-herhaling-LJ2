@@ -5,10 +5,18 @@ require_once 'vendor/autoload.php';
 use Game\Character;
 use Game\Battle;
 use Game\Inventory;
+use Smarty;
+
+
+$template = new Smarty();
+$template->setTemplateDir(__DIR__ . 'templates');
+$template->setCompileDir(__DIR__ . 'templates_c');
+$template->setCacheDir(__DIR__ . 'cache');
+$template->setConfigDir(__DIR__ . 'configs');
 
 // Twee characters aanmaken
-$fighter1 = new Character('Ligma', 100, 20, 5, 'Warrior');
-$fighter2 = new Character('Sigma', 100, 15, 10, 'tank');
+$fighter1 = new Character('Ligma', 100, 20, 5, 'Warrior', 1);
+$fighter2 = new Character('Sigma', 100, 15, 10, 'tank', 2);
 
 
 // Voorbeeld van het toevoegen van items aan de inventory
@@ -38,7 +46,7 @@ echo "=== Eerste gevecht ===\n\n";
 $battle1 = new Battle();
 $result = $battle1->startFight($fighter1, $fighter2);
 $battle1->changeMaxRounds(5); // Limiteer tot 5 rondes
-echo $battle1->getBattleLog();
+
 
 echo "\n--- Einde eerste gevecht ---\n\n";
 
@@ -60,17 +68,10 @@ echo "=== Tweede gevecht ===\n\n";
 $battle2 = new Battle();
 $result = $battle2->startFight($fighter1, $fighter2);
 $battle2->changeMaxRounds(10);
-echo $battle2->getBattleLog();
+
 
 echo "</pre>";
 
 // Als er geen winnaar is, aantal rondes verhogen en opnieuw proberen
-while (strpos($result, 'maximum aantal rondes is bereikt') !== false) {
-    $battle2->changeMaxRounds($battle2->getMaxRounds() + 5);
-    echo "<p><strong>Geen winnaar gevonden, verhogen naar {$battle2->getMaxRounds()} rondes en opnieuw proberen...</strong></p>";
-
-    echo "<pre>";
-    $result = $battle2->startFight($fighter1, $fighter2);
-    echo $battle2->getBattleLog();
-    echo "</pre>";
-}
+$template->assign('charaacter', $fighter1);
+$template->display('character.tpl');

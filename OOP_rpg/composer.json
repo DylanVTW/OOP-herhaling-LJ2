@@ -11,5 +11,7 @@
             "email": "9022218@student.zadkine.nl"
         }
     ],
-    "require": {}
+    "require": {
+        "smarty/smarty": "^5.5"
+    }
 }

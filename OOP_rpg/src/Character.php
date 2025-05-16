@@ -20,7 +20,8 @@ class Character{
     private int $health,
     private int $attack,
     private int $defense, 
-    private string $role
+    private string $role,
+    private int $range
     )
     {
         $this->inventory = new Inventory();
@@ -99,6 +100,18 @@ class Character{
     public function getAttack(): int {
         return $this->attack;
     }
+
+
+    /**
+     * 
+     * Haalt de range van het character op.
+     * 
+     * @return int De range van het character.
+     */
+
+     public function getRange(): int {
+        return $this->range;
+     }
 
         /**
      * Vermindert de health van het character op basis van ontvangen schade.

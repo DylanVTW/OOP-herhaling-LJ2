@@ -6,7 +6,17 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd70a0b0377b9345fd2784dda6734c2ba
 {
+    public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'c15d4a1253e33e055d05e547c61dcb71' => __DIR__ . '/..' . '/smarty/smarty/src/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Smarty\\' => 7,
+        ),
         'G' => 
         array (
             'Game\\' => 5,
@@ -14,6 +24,14 @@ class ComposerStaticInitd70a0b0377b9345fd2784dda6734c2ba
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Smarty\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/smarty/smarty/src',
+        ),
         'Game\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
