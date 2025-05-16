@@ -1,32 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Document</title>
-</head>
-<body>
-    <h1>Character overview - {$character->getName()}</h1>
+{extends file='layout.tpl'}
 
-
-    <h2>Character details</h2>
-
-    <p>Name: {$character->getName()}</p>
-    <p>Health: {$character->getHealth()}</p>
-    <p>Attack: {$character->getAttack()}</p>
-    <p>Defense: {$character->getDefense()}</p>
-    <p>Role: {$character->getRole()}</p>
-    <p>Range: {$character->getRange}</p>
-
-    <h2>Character inventory</h2>
-
-    <ul>
-        {foreach from=$character->getInventory() item=item}
-            <li>{$item->getName()} - {$item->getDescription()}</li>
-        {/foreach}
-    </ul>
-
-    
-</body>
-</html>
+{block name="content"}
+    <div class="card my-4" style="max-width: 400px;">
+        <div class="card-header">
+            <h2 class="mb-0">{$character->getName()}</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Name:</strong> {$character->getName()}</p>
+            <p class="card-text"><strong>Health:</strong> {$character->getHealth()}</p>
+            <p class="card-text"><strong>Attack:</strong> {$character->getAttack()}</p>
+            <p class="card-text"><strong>Defense:</strong> {$character->getDefense()}</p>
+            <p class="card-text"><strong>Role:</strong> {$character->getRole()}</p>
+            <p class="card-text"><strong>Range:</strong> {$character->getRange()}</p>
+        </div>
+    </div>
+{/block}

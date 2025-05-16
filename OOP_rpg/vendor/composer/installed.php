@@ -3,7 +3,7 @@
         'name' => 'game/rpg-game',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'f3f3a289d5b2527c35d6ac6e3e1bfcc51ebb5ef2',
+        'reference' => '0337fe7a2c8128ad2d08a432898442d579608e5d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'game/rpg-game' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'f3f3a289d5b2527c35d6ac6e3e1bfcc51ebb5ef2',
+            'reference' => '0337fe7a2c8128ad2d08a432898442d579608e5d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
