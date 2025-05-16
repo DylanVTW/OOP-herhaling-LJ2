@@ -9,7 +9,7 @@ namespace Game;
 class Inventory {
 
     /**
-     * @var array Lijst met items in de inventory.
+     * @var string[] Lijst met items in de inventory.
      */
     private array $items = [];
 
@@ -41,7 +41,7 @@ class Inventory {
     /**
      * Haal alle items op uit de inventory.
      *
-     * @return array Lijst van items
+     * @return string[] Lijst van items
      */
     public function getItems(): array {
         return $this->items;

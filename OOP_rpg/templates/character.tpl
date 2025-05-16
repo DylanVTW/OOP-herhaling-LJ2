@@ -13,5 +13,8 @@
             <p class="card-text"><strong>Role:</strong> {$character->getRole()}</p>
             <p class="card-text"><strong>Range:</strong> {$character->getRange()}</p>
         </div>
+        <div class="card-footer text-end">
+            <a href="index.php?page=characterList" class="btn btn-secondary">Terug naar lijst</a>
+        </div>
     </div>
 {/block}

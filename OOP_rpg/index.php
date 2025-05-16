@@ -6,6 +6,9 @@ use Game\Character;
 use Game\Battle;
 use Game\Inventory;
 use Smarty\Smarty;
+use Game\CharacterList;
+
+session_start();
 
 
 $template = new Smarty();
@@ -13,14 +16,71 @@ $template->setTemplateDir(__DIR__ . '/templates');
 $template->setCompileDir(__DIR__ . '/templates_c');
 
 
-// Twee characters aanmaken
-$fighter1 = new Character('Ligma', 100, 20, 5, 'Warrior', 1);
-$fighter2 = new Character('Sigma', 100, 15, 10, 'tank', 2);
+$characterList = $_SESSION['characterList'] ?? new CharacterList();
+$page = $_GET['page'] ?? '';
+
+switch ($page) {
+    case 'createCharacter':
+        $template->display('createCharacterForm.tpl');
+        break;
+    case 'saveCharacter':
+        if (
+            !empty($_POST['name']) && !empty($_POST['health']) && !empty($_POST['attack'])
+            && !empty($_POST['defense']) && !empty($_POST['role']) && !empty($_POST['range'])
+        ) {
+            $character = new Character($_POST['name'], $_POST['health'], $_POST['attack'], $_POST['defense'], $_POST['role'], $_POST['range']);
+            $characterList->addCharacter($character);
+            $template->assign('character', $character);
+            $template->display('character.tpl');
+        } else {
+            $template->assign('error', 'Vul alstublieft alle velden in.');
+            $template->display('createCharacterForm.tpl');
+        }
+        break;
+
+    case 'listCharacters':
+        $template->assign('characters', $characterList->getCharacters());
+        $template->display('characterList.tpl');
+        break;
+
+    case 'viewCharacter':
+        if (!empty($_GET['name'])) {
+            $character = $characterList->getCharacter($_GET['name']);
+            if ($character) {
+                $template->assign('character', $character);
+                $template->display('character.tpl');
+            } else {
+                $template->assign('message', 'Character not found.');
+                $template->display('error.tpl');
+            }
+        } else {
+            $template->assign('message', 'No character name provided.');
+            $template->display('error.tpl');
+        }
+        break;
+    case 'deleteCharacter':
+        if (!empty($_GET['name'])) {
+            $character = $characterList->getCharacter($_GET['name']);
+            if ($character) {
+                $characterList->removeCharacter($character);
+                $template->assign('message', 'Character deleted successfully.');
+            } else {
+                $template->assign('message', 'Character not found.');
+            }
+        } else {
+            $template->assign('message', 'No character name provided.');
+        }
+        $template->display('error.tpl');
+        break;
+
+    default:
+        $template->display('home.tpl');
+        break;
+}
 
 
-// Voorbeeld van het toevoegen van items aan de inventory
-$fighter1->inventory->addItem('Zwaard');
-$fighter1->inventory->addItem('Schild');
+
+$_SESSION['characterList'] = $characterList;
 
 
 
@@ -74,5 +134,4 @@ $fighter1->inventory->addItem('Schild');
 // echo "</pre>";
 
 // Als er geen winnaar is, aantal rondes verhogen en opnieuw proberen
-$template->assign('character', $fighter1);
-$template->display('character.tpl');
+

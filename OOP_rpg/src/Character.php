@@ -3,6 +3,11 @@
 namespace Game;
 class Character{
 
+
+    /**
+     * Summary of inventory
+     * @return string[] Inventory
+     */
     public Inventory $inventory;
 
         /**
@@ -12,7 +17,7 @@ class Character{
      * @param int    $health De hoeveelheid health points.
      * @param int    $attack De aanvalskracht.
      * @param int    $defense De verdediging.
-     * @param array  $inventory De inventory van het character.
+     * @return string[]  $inventory De inventory van het character.
      */
 
  public function __construct(

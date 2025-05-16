@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-05-16 09:54:21
+/* Smarty version 5.5.0, created on 2025-05-16 11:48:25
   from 'file:layout.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_68270b4dacbb36_32767522',
+  'unifunc' => 'content_68272609274d94_93876032',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '95634ed8efad9c208f8e8613b4c14a66de58eb41' => 
     array (
       0 => 'layout.tpl',
-      1 => 1747389257,
+      1 => 1747396103,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_68270b4dacbb36_32767522 (\Smarty\Template $_smarty_tpl) {
+function content_68272609274d94_93876032 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -240,27 +240,23 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
         </li>
       </ul>
     </div>
-    <header>
-      <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Fixed navbar</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
+      <header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-body-tertiary">
+           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="index.php"
                   >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php?page=createCharacter"
+                  >Create Character</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php?page=listCharacters"
+                  >Character List</a
                 >
               </li>
               <li class="nav-item">
@@ -285,7 +281,7 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
     <!-- Begin page content -->
     <main class="flex-shrink-0">
       <div class="container"><?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_46219821768270b4dac60a6_44247840', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_6686665026827260926c327_76348678', "content");
 ?>
 </div>
     </main>
@@ -303,7 +299,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_4621982176827
 </html>
 <?php }
 /* {block "content"} */
-class Block_46219821768270b4dac60a6_44247840 extends \Smarty\Runtime\Block
+class Block_6686665026827260926c327_76348678 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
