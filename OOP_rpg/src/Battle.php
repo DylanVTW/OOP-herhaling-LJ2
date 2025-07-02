@@ -27,6 +27,10 @@ class Battle {
      */
     private int $roundNumber = 1;
 
+
+    private int $fighter1OriginalHealth = 100;
+    private int $fighter2OriginalHealth = 100;
+
     /**
      * Geeft de battle log terug.
      * 
@@ -54,6 +58,14 @@ class Battle {
         return $this->roundNumber;
     }
 
+    public function getFighter1OriginalHealth(): int {
+        return $this->fighter1OriginalHealth;
+    }
+
+    public function getFighter2OriginalHealth(): int {
+        return $this->fighter2OriginalHealth;
+    }
+
     /**
      * Past het maximale aantal rondes aan.
      * 
@@ -67,31 +79,31 @@ class Battle {
     /**
      * Start het gevecht tussen twee characters.
      * 
-     * @param Character $fighter1
-     * @param Character $fighter2
+     * @param Character $character1
+     * @param Character $character2
      * @return string Resultaat van het gevecht.
      */
-    public function startFight(Character $fighter1, Character $fighter2): string {
-        $this->battleLog = "Het gevecht tussen {$fighter1->getName()} en {$fighter2->getName()} is begonnen!\n\n";
+    public function startFight(Character $character1, Character $character2): string {
+        $this->battleLog = "Het gevecht tussen {$character1->getName()} en {$character2->getName()} is begonnen!\n\n";
 
-        while ($fighter1->getHealth() > 0 && $fighter2->getHealth() > 0 && $this->roundNumber <= $this->maxRounds) {
-            // Fighter 1 valt aan
-            $damage1 = $this->calculateDamage($fighter1, $fighter2);
-            $fighter2->takeDamage($damage1);
-            $this->logAttack($fighter1, $fighter2, $damage1);
+        while ($character1->getHealth() > 0 && $character2->getHealth() > 0 && $this->roundNumber <= $this->maxRounds) {
+            // character 1 valt aan
+            $damage1 = $this->calculateDamage($character1, $character2);
+            $character2->setHealth($character2->getHealth() - $damage1);
+            $this->logAttack($character1, $character2, $damage1);
 
-            if ($fighter2->getHealth() <= 0) {
-                $this->battleLog .= "🏆 {$fighter1->getName()} heeft gewonnen!\n";
+            if ($character2->getHealth() <= 0) {
+                $this->battleLog .= "🏆 {$character1->getName()} heeft gewonnen!\n";
                 return $this->battleLog;
             }
 
-            // Fighter 2 valt aan
-            $damage2 = $this->calculateDamage($fighter2, $fighter1);
-            $fighter1->takeDamage($damage2);
-            $this->logAttack($fighter2, $fighter1, $damage2);
+            // character 2 valt aan
+            $damage2 = $this->calculateDamage($character2, $character1);
+            $character1->setHealth($character1->getHealth() - $damage2);
+            $this->logAttack($character2, $character1, $damage2);
 
-            if ($fighter1->getHealth() <= 0) {
-                $this->battleLog .= "🏆 {$fighter2->getName()} heeft gewonnen!\n";
+            if ($character1->getHealth() <= 0) {
+                $this->battleLog .= "🏆 {$character2->getName()} heeft gewonnen!\n";
                 return $this->battleLog;
             }
 

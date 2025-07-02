@@ -231,6 +231,15 @@
                   >Character List</a
                 >
               </li>
+                            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php?page=testDatabase"
+                  >Test Database</a
+                >
+              </li>
+              <!-- Voeg deze <li> toe in je <ul class="navbar-nav ..."> in layout.tpl -->
+              <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.php?page=battleForm">Battle Arena</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
               </li>

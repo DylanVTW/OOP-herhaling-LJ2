@@ -46,7 +46,7 @@ class CharacterList
     public function getCharacter(string $name): ?Character
     {
         foreach ($this->characters as $character) {
-            if ($character->getName() === $name) {
+            if ($character instanceof Character && $character->getName() === $name) {
                 return $character;
             }
         }

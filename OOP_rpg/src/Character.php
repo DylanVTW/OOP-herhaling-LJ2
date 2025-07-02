@@ -1,145 +1,115 @@
 <?php
 
 namespace Game;
-class Character{
+class Character
+{
+    // Basis properties als private properties
+    private string $name;
+    private string $role;
+    private int $health;
+    protected int $attack;
+    protected int $defense;
+    private int $range;
+    private array $inventory;
 
+    protected int $tempAttack = 0;
 
-    /**
-     * Summary of inventory
-     * @return string[] Inventory
-     */
-    public Inventory $inventory;
+    protected int $tempDefense = 0;
 
-        /**
-     * Character constructor.
-     *
-     * @param string $name   De naam van het character.
-     * @param int    $health De hoeveelheid health points.
-     * @param int    $attack De aanvalskracht.
-     * @param int    $defense De verdediging.
-     * @return string[]  $inventory De inventory van het character.
-     */
-
- public function __construct(
-    private string $name,
-    private int $health,
-    private int $attack,
-    private int $defense, 
-    private string $role,
-    private int $range
-    )
+    // Constructor vervangen door setCharacter methode
+    public function __construct($name, $role, $health, $attack, $defense, $range)
     {
-        $this->inventory = new Inventory();
+        $this->name = $name;
+        $this->role = $role;
+        $this->health = $health;
+        $this->attack = $attack;
+        $this->defense = $defense;
+        $this->range = $range;
+        $this->inventory = []; 
     }
 
-    /**
-     * 
-     * Past de health van de character aan.
-     * 
-     * @param int $newHealth De nieuwe health waarde.
-     * @return void
-     */
-
-    public function setHealth(int $newHealth): void {
-
-        if ($newHealth < 0) {
-            echo "Health mag niet onder de 0 komen. \n";
-            return;
-        } 
-        $this->health = $newHealth;
-        
+    // Getter voor Inventory
+    public function getInventory()
+    {
+        return $this->inventory;
     }
 
-    /**
-     * 
-     * Haalt de health van het character op.
-     * 
-     * @return int De health van het character.
-     */
-
-    public function getHealth(): int {
-        return $this->health;
-    }
-
-    /**
-     * 
-     * Haalt de defense van het character op.
-     * 
-     * @return int De defense van het character.
-     */
-
-    public function getDefense(): int {
-        return $this->defense;
-    }
-
-    /**
-     * 
-     * Haalt de naam van het character op.
-     * 
-     * @return string De naam van het character.
-     */
-
-    public function getName(): string {
+    // Getters voor alle properties
+    public function getName()
+    {
         return $this->name;
     }
-        
-     
-    /**
-     * 
-     * Haalt de rol van het character op.
-     * 
-     * @return string De rol van het character.
-     */
-    public function getRole(): string {
+
+    public function getRole()
+    {
         return $this->role;
     }
 
-        /**
-         * 
-         * Haalt de attack van het character op.
-         * 
-         * @return int De aanvalskracht van het character.
-         */
-
-    
-    public function getAttack(): int {
-        return $this->attack;
-    }
-
-
-    /**
-     * 
-     * Haalt de range van het character op.
-     * 
-     * @return int De range van het character.
-     */
-
-     public function getRange(): int {
-        return $this->range;
-     }
-
-        /**
-     * Vermindert de health van het character op basis van ontvangen schade.
-     *
-     * @param int $damage De hoeveelheid schade.
-     * @return void
-     */
-
-    public function takeDamage(int $damage): void {
-        $this->health = max(0, $this->health - $damage);
-    }
-
-
-     /**
-     * Geeft een korte beschrijving van het character terug.
-     *
-     * @return string
-     */
-
- 
-    public function getSummary(): string
+    public function getHealth()
     {
-        return "{$this->name} | Health: {$this->health}, Attack: {$this->attack}, Defense: {$this->defense}";
+        return $this->health;
+    }
+
+    public function getAttack()
+    {
+        return $this->attack + $this->tempAttack;
+    }
+
+    public function getDefense()
+    {
+        return $this->defense + $this->tempDefense;
+    }
+
+    public function getRange()
+    {
+        return $this->range;
+    }
+
+    // Setters voor alle properties
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function setHealth($health)
+    {
+        $this->health = $health;
+    }
+
+    public function setAttack($attack)
+    {
+        $this->attack = $attack;
+    }
+
+    public function setDefense($defense)
+    {
+        $this->defense = $defense;
+    }
+
+    public function setRange($range)
+    {
+        $this->range = $range;
+    }
+
+    public function resetTempStats()
+    {
+        $this->tempAttack = 0;
+        $this->tempDefense = 0;
+    }
+
+    protected function modifyTemporaryStats(int $attackMod, int $defenseMod)
+    {
+        $this->tempAttack += $attackMod;
+        $this->tempDefense += $defenseMod;
+
+        return "Temporary stats modified: Attack +{$attackMod}, Defense +{$defenseMod}";
     }
 
 }
+
+?>

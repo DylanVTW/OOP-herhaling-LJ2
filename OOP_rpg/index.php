@@ -5,8 +5,17 @@ require_once 'vendor/autoload.php';
 use Game\Character;
 use Game\Battle;
 use Game\Inventory;
+use Game\ItemList;
 use Smarty\Smarty;
 use Game\CharacterList;
+use Game\DatabaseManager;
+use Game\Mysql;
+use Dotenv\Dotenv;
+use Game\Item;
+use Game\Warrior;
+use Game\Mage;
+use Game\Rogue;
+use Game\Healer;
 
 session_start();
 
@@ -15,27 +24,87 @@ $template = new Smarty();
 $template->setTemplateDir(__DIR__ . '/templates');
 $template->setCompileDir(__DIR__ . '/templates_c');
 
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+try {
+    $database = new Mysql(
+        $_ENV['DB_HOST'],
+        $_ENV['DB_NAME'],
+        $_ENV['DB_USER'],
+        $_ENV['DB_PASS']
+    );
+    DatabaseManager::setIntance($database);
+} catch (PDOException $error) {
+    $dberror = $error->getMessage();
+}
+
 
 $characterList = $_SESSION['characterList'] ?? new CharacterList();
 $page = $_GET['page'] ?? '';
+
+$testSword = new Item("Test Sword", "Weapon", 10);
+$testArmor = new Item("Test Armor", "Armor", 20);
+$testPotion = new Item("Test Potion", "Potion", 5);
 
 switch ($page) {
     case 'createCharacter':
         $template->display('createCharacterForm.tpl');
         break;
     case 'saveCharacter':
-        if (
-            !empty($_POST['name']) && !empty($_POST['health']) && !empty($_POST['attack'])
-            && !empty($_POST['defense']) && !empty($_POST['role']) && !empty($_POST['range'])
-        ) {
-            $character = new Character($_POST['name'], $_POST['health'], $_POST['attack'], $_POST['defense'], $_POST['role'], $_POST['range']);
-            $characterList->addCharacter($character);
-            $template->assign('character', $character);
-            $template->display('character.tpl');
-        } else {
-            $template->assign('error', 'Vul alstublieft alle velden in.');
-            $template->display('createCharacterForm.tpl');
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $health = (int) $_POST['health'];
+        $attack = (int) $_POST['attack'];
+        $defense = (int) $_POST['defense'];
+        $range = (int) $_POST['range'];
+
+        $characterList = $_SESSION['characterList'] ?? new CharacterList();
+        // Dynamisch character object aanmaken op basis van rol
+        switch ($_POST['role']) {
+            case 'Warrior':
+                $character = new Warrior($name, $role, $health, $attack, $defense, $range);
+                $character->setRage((int) ($_POST['rage'] ?? 0));
+                break;
+            case 'Mage':
+                $character = new Mage($name, $role, $health, $attack, $defense, $range);
+                $character->setMana((int) ($_POST['mana'] ?? 150));
+                break;
+            case 'Rogue':
+                $character = new Rogue($name, $role, $health, $attack, $defense, $range);
+                $character->setEnergy((int) ($_POST['energy'] ?? 100));
+                break;
+            case 'Healer':
+                $character = new Healer($name, $role, $health, $attack, $defense, $range);
+                $character->setSpirit((int) ($_POST['spirit'] ?? 200));
+                break;
+            default:
+                $character = new Character($name, $role, $health, $attack, $defense, $range);
+                break;
         }
+
+        // Specifieke eigenschappen instellen voor Warrior en Mage
+        if ($_POST['role'] == 'Warrior' && isset($_POST['rage'])) {
+            $character->setRage($_POST['rage']);
+        }
+
+        if ($_POST['role'] == 'Mage' && isset($_POST['mana'])) {
+            $character->setMana($_POST['mana']);
+        }
+        if ($_POST['role'] == 'Rogue' && isset($_POST['energy']) && $character instanceof Game\Rogue) {
+            $character->setEnergy($_POST['energy']);
+        }
+        if ($_POST['role'] == 'Healer' && isset($_POST['spirit']) && $character instanceof Game\Healer) {
+            $character->setSpirit($_POST['spirit']);
+        }
+
+        // Rest van de logica blijft ongewijzigd
+
+        $characterList->addCharacter($character);
+        $_SESSION['characterList'] = $characterList;
+
+        header('Location: index.php?page=characterList');
+
         break;
 
     case 'listCharacters':
@@ -72,6 +141,182 @@ switch ($page) {
         }
         $template->display('error.tpl');
         break;
+    case 'battleForm':
+        $characterList = $_SESSION['characterList'] ?? new CharacterList();
+        $characters = $characterList->getCharacters();
+        $template->assign('characters', $characters);
+        $template->display('battleForm.tpl');
+        break;
+
+    case 'startBattle':
+        $characterList = $_SESSION['characterList'] ?? new CharacterList();
+        $character1 = $characterList->getCharacter($_POST['character1']);
+        $character2 = $characterList->getCharacter($_POST['character2']);
+
+        if(!$character1 || !$character2) {
+            $template->assign('error', 'One or both characters not found.');
+            $template->display('error.tpl');
+            break;
+        }
+        $battle = new Battle();
+$maxRounds = isset($_POST['maxRounds']) ? (int)$_POST['maxRounds'] : 10;
+$battle->changeMaxRounds($maxRounds);
+
+        $battlelog = $battle->startFight($character1, $character2);
+    
+
+        $battleResult = $battle->getBattleLog();
+         if ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
+        $winner = $character1->getName();
+    } elseif ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
+        $winner = $character2->getName();
+    } else {
+        $winner = 'draw';
+    }
+        $battleSummary = $battleResult;
+        $characters = [
+            'character1' => [
+                'name' => $character1->getName(),
+                'health' => $character1->getHealth(),
+                'attack' => $character1->getAttack(),
+                'defense' => $character1->getDefense(),
+                'role' => $character1->getRole()
+            ],
+            'character2' => [
+                'name' => $character2->getName(),
+                'health' => $character2->getHealth(),
+                'attack' => $character2->getAttack(),
+                'defense' => $character2->getDefense(),
+                'role' => $character2->getRole()
+            ]
+        ];
+         $character1->setHealth($battle->getFighter1OriginalHealth());
+        $character2->setHealth($battle->getFighter2OriginalHealth());
+
+
+        break;
+    case 'testDatabase':
+        if (DatabaseManager::getInstance()->testConnection()) {
+            $template->assign('message', 'Database connection is working.');
+        } else {
+            $template->assign('message', 'Database connection failed.');
+        }
+        $template->display('testDatabase.tpl');
+        break;
+    case 'createItem':
+        $template->display('createItem.tpl');
+        break;
+    case "saveItem":
+        if (!empty($_POST['name']) && !empty($_POST['type']) && !empty($_POST['value'])) {
+            $item = new Item($_POST['name'], $_POST['type'], $_POST['value']);
+            if ($item->save()) {
+                $template->assign('item', $item);
+                $template->display('itemCreated.tpl');
+            } else {
+                $template->assign('error', 'Failed to save item');
+                $template->display('error.tpl');
+            }
+        } else {
+            $template->assign('error', 'Failed to save item');
+            $template->display('error.tpl');
+        }
+        break;
+    case 'listItem':
+        $itemlist = new ItemList();
+        $params = [];
+        if (!empty($_POST['id'])) {
+            $params['id'] = (int) $_POST['id'];
+            $template->assign('selectedId', $_POST['id']);
+
+        }
+        if (!empty($_POST['type'])) {
+            $params['type'] = $_POST['type'];
+            $template->assign('selectedType', $_POST['type']);
+        }
+
+        if (isset($_POST['minValue']) && is_numeric($_POST['minValue'])) {
+            $params['minValue'] = (float) $_POST['minValue'];
+            $template->assign('selectedMinValue', $_POST['minValue']);
+        }
+        if (!empty($_POST['name'])) {
+            $params['name'] = $_POST['name'];
+            $template->assign('selectedName', $_POST['name']);
+        }
+        if (!empty($params)) {
+            $itemList->loadByParams($params);
+        } else {
+            $itemList->loadAllFromDatabase();
+        }
+        $itemlist->loadAllFromDatabase();
+        $template->assign('items', $itemlist->getItems());
+        $template->assign('count', $itemlist->count());
+        $template->display('itemList.tpl');
+        break;
+    case 'updateItem':
+        if (empty($_GET['id'])) {
+            $item = Item::loadFromDatabase((int) $_GET['id']);
+            if ($item !== null) {
+                $template->assign('item', $item);
+                $template->display('updateItem.tpl');
+            } else {
+                $template->assign('error', 'Item not found.');
+                $template->display('error.tpl');
+            }
+
+        } else {
+            $template->assign('error', 'No item ID provided.');
+            $template->display('error.tpl');
+        }
+        break;
+
+    case 'saveUpdatedItem':
+        if (!empty($_POST['name']) && !empty($_POST['type']) && !empty($_POST['value']) && !empty($_POST['id']))
+            ;
+        $item = new Item($_POST['name'], $_POST['type'], $_POST['value'], (int) $_POST['id']);
+        if ($item->update()) {
+            $template->assign('item', $item);
+            $template->display('itemUpdated.tpl');
+        } else {
+            $template->assign('error', 'Failed to update item');
+            $template->display('error.tpl');
+        }
+        break;
+    case 'deleteItem':
+        if (!empty($_GET['id'])) {
+            $item = Item::loadFromDatabase((int) $_GET['id']);
+            if ($item !== null) {
+                $template->assign('item', $item);
+                $template->display('deleteItemconfirm.tpl');
+            } else {
+                $template->assign('error', 'Item not found.');
+                $template->display('error.tpl');
+            }
+        } else {
+            $template->assign('error', 'No item ID provided.');
+            $template->display('error.tpl');
+        }
+        break;
+    case 'deleteItemConfirm':
+        if (!empty($_POST['id'])) {
+            $item = Item::loadFromDatabase((int) $_POST['id']);
+            if ($item !== null) {
+                if ($item->delete()) {
+                    $template->assign('message', 'Item deleted successfully.');
+                    $template->display('itemDeleted.tpl');
+                } else {
+                    $template->assign('error', 'Failed to delete item.');
+                    $template->display('error.tpl');
+                }
+            } else {
+                $template->assign('error', 'Item not found.');
+                $template->display('error.tpl');
+            }
+        } else {
+            $template->assign('error', 'No item ID provided.');
+            $template->display('error.tpl');
+        }
+
+        break;
 
     default:
         $template->display('home.tpl');
@@ -80,6 +325,7 @@ switch ($page) {
 
 
 
+var_dump(DatabaseManager::getInstance());
 $_SESSION['characterList'] = $characterList;
 
 

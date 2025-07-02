@@ -15,7 +15,10 @@
                     <th>Attack</th>
                     <th>Defense</th>
                     <th>Range</th>
-                    <th>Actions</th>
+                    <th>Rage</th>
+                    <th>Mana</th>
+                    <th>Energy</th>
+                    <th>Spirit</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +30,35 @@
                     <td>{$character->getAttack()}</td>
                     <td>{$character->getDefense()}</td>
                     <td>{$character->getRange()}</td>
+                    <td>
+                        {if $character->getRole() == 'Warrior' && $character->getRage() !== null}
+                            {$character->getRage()}
+                        {else}
+                            -
+                        {/if}
+                    </td>
+                    <td>
+                        {if $character->getRole() == 'Mage' && $character->getMana() !== null}
+                            {$character->getMana()}
+                        {else}
+                            -
+                        {/if}
+
+                    </td>
+                    <td>
+                        {if $character->getRole() == 'Rogue' && $character->getEnergy() !== null}
+                            {$character->getEnergy()}
+                        {else}
+                            -
+                        {/if}
+                    </td>
+                    <td>
+                        {if $character->getRole() == 'Healer' && $character->getSpirit() !== null}
+                            {$character->getSpirit()}
+                        {else}
+                            -
+                        {/if}
+                    </td>
                     <td>
                         <a href="index.php?page=viewCharacter&name={$character->getName()}" class="btn btn-sm btn-primary">View</a>
                         <a href="index.php?page=deleteCharacter&name={$character->getName()}" class="btn btn-sm btn-danger">Delete</a>
