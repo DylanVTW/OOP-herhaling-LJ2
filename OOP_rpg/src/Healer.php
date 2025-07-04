@@ -22,6 +22,12 @@ public function setSpirit(int $spirit): void
     $this->spirit = $spirit;
 }
 
+    public function getSummary()
+    {
+        $parentSummary = parent::getSummary();
+        $spiritInfo = "<br>Additionally, this warrior has {$this->spirit} spirit points.";
+        return $parentSummary . "". $spiritInfo; 
+    }
 
 public function performHealingPrayer(): ?string
 {

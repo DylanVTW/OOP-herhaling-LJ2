@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-02 13:32:52
+/* Smarty version 5.5.0, created on 2025-07-04 07:50:19
   from 'file:battleForm.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_6865350420fa10_47437042',
+  'unifunc' => 'content_686787bb78ecd4_03377891',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '64d0172262f3d6aaae66cab10c6675e6cad224c2' => 
     array (
       0 => 'battleForm.tpl',
-      1 => 1751463005,
+      1 => 1751615406,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_6865350420fa10_47437042 (\Smarty\Template $_smarty_tpl) {
+function content_686787bb78ecd4_03377891 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_202402541468653504202dc2_59776162', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1134160226686787bb773815_82543607', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, 'layout.tpl', $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_202402541468653504202dc2_59776162 extends \Smarty\Runtime\Block
+class Block_1134160226686787bb773815_82543607 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';

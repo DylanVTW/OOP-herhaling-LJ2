@@ -22,6 +22,12 @@ class Rogue extends Character
         $this->energy = $energy;
     }
 
+        public function getSummary()
+    {
+        $parentSummary = parent::getSummary();
+        $energyInfo = "<br>Additionally, this Rogue has {$this->energy} energy points.";
+        return $parentSummary . "". $energyInfo; 
+    }
     public function performSneakAttack(): ?string
     {
         if ($this->energy < 20) {

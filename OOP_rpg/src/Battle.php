@@ -3,6 +3,7 @@
 namespace Game;
 
 use Game\Character;
+use PHPStan\Type\VoidType;
 
 class Battle {
     
@@ -11,7 +12,7 @@ class Battle {
      * 
      * @var string
      */
-    private string $battleLog = "";
+    private array $battleLog = [];
 
     /**
      * Het maximaal aantal rondes.
@@ -31,14 +32,32 @@ class Battle {
     private int $fighter1OriginalHealth = 100;
     private int $fighter2OriginalHealth = 100;
 
+    private Character|Warrior|Mage|Rogue|Healer $fighter1;
+    private Character|Warrior|Mage|Rogue|Healer $fighter2;
+
+
+    public function __construct(
+        Character|Warrior|Mage|Rogue|Healer $fighter1,
+        Character|Warrior|Mage|Rogue|Healer $fighter2,
+        int $maxRounds = 10)
+    {
+        $this->fighter1 = $fighter1;
+        $this->fighter2 = $fighter2;
+        $this->maxRounds = $maxRounds;
+        $this->battleLog[] = "Het gevecht is gestart";
+        $this->fighter1OriginalHealth = $fighter1->getHealth();
+        $this->fighter2OriginalHealth = $fighter2->getHealth();
+    }
+
     /**
      * Geeft de battle log terug.
      * 
-     * @return string
+     * @return array
      */
-    public function getBattleLog(): string {
+    public function getBattleLog(): array {
         return $this->battleLog;
     }
+    
 
     /**
      * Geeft het maximale aantal rondes terug.
@@ -56,6 +75,13 @@ class Battle {
      */
     public function getRoundNumber(): int {
         return $this->roundNumber;
+    }
+
+    public function getFighter1(): Character|Warrior|Mage|Rogue|Healer {
+        return $this->fighter1;
+    }
+    public function getFighter2(): Character|Warrior|Mage|Rogue|Healer {
+        return $this->fighter2;
     }
 
     public function getFighter1OriginalHealth(): int {
@@ -76,6 +102,58 @@ class Battle {
         $this->maxRounds = $rounds;
     }
 
+
+    private function executeAttack(Character $attacker, Character $defender)
+    {
+        $damage = $this->calculateDamage($attacker, $defender);
+
+        if(method_exists($defender, 'takeDamage')){
+            $defender->takeDamage($damage);
+        } else {
+            $defender->setHealth($defender->getHealth() - $damage);
+        }
+
+        $this->battleLog[] = "Ronde {$this->roundNumber}: <strong>{$attacker->getName()}</strong> valt aan en doet <strong>{$damage}</strong> schade aan <strong>{$defender->getName()}</strong>.";
+        $this->battleLog[] = "{$defender->getName()} heeft nu <strong>{$defender->getHealth()}</strong> health.";
+
+        if ($defender->getHealth() <= 0) 
+        {
+            $this->battleLog[] = "<strong>🏆 {$attacker->getName()} heeft gewonnen!</strong>";
+            return $this->battleLog;
+        }
+    }
+
+    public function executeTurn($attacker, $defender): string
+    {
+        $damage = $this->calculateDamage($attacker, $defender);
+
+        if (method_exists($defender, 'takeDamage')) {
+            $defender->takeDamage($damage);
+        } else {
+            $defender->setHealth($defender->getHealth() - $damage);
+        }
+
+        $description = "Ronde {$this->roundNumber}: <strong>{$attacker->getName()}</strong> valt aan en doet <strong>{$damage}</strong> schade aan <strong>{$defender->getName()}</strong>.";
+         "{$defender->getName()} heeft nu <strong>{$defender->getHealth()}</strong> health.<br>";
+
+        $this->battleLog[] = $description;
+
+        if ($defender->getHealth() <=0)
+        {
+            $ko = "<strong>🏆 {$attacker->getName()} heeft gewonnen!</strong><br>";
+            $this->battleLog[] = $ko;
+            $description .= $ko;
+        }
+        return $description;
+    }
+
+    public function endBattle(): void
+    {
+        $this->fighter1->setHealth($this->fighter1OriginalHealth);
+        $this->fighter2->setHealth($this->fighter2OriginalHealth);
+        $this->battleLog[] = "Het gevecht is beëindigd.";
+    }
+
     /**
      * Start het gevecht tussen twee characters.
      * 
@@ -84,7 +162,7 @@ class Battle {
      * @return string Resultaat van het gevecht.
      */
     public function startFight(Character $character1, Character $character2): string {
-        $this->battleLog = "Het gevecht tussen {$character1->getName()} en {$character2->getName()} is begonnen!\n\n";
+        $this->battleLog [] = "Het gevecht tussen <strong> {$character1->getName()}</strong> en <strong>{$character2->getName()}</strong> is begonnen!<br><br>";
 
         while ($character1->getHealth() > 0 && $character2->getHealth() > 0 && $this->roundNumber <= $this->maxRounds) {
             // character 1 valt aan
@@ -93,7 +171,7 @@ class Battle {
             $this->logAttack($character1, $character2, $damage1);
 
             if ($character2->getHealth() <= 0) {
-                $this->battleLog .= "🏆 {$character1->getName()} heeft gewonnen!\n";
+                $this->battleLog [] = "<strong>🏆 {$character1->getName()} heeft gewonnen!</strong><br>";
                 return $this->battleLog;
             }
 
@@ -103,15 +181,16 @@ class Battle {
             $this->logAttack($character2, $character1, $damage2);
 
             if ($character1->getHealth() <= 0) {
-                $this->battleLog .= "🏆 {$character2->getName()} heeft gewonnen!\n";
+                $this->battleLog [] = "🏆 <strong>{$character2->getName()} heeft gewonnen!</strong><br>";
                 return $this->battleLog;
             }
 
             $this->roundNumber++;
+            $this->battleLog []=  "<br>";
         }
 
         if ($this->roundNumber > $this->maxRounds) {
-            $this->battleLog .= "⏳ Het maximum aantal rondes is bereikt. Het gevecht is geëindigd zonder winnaar.\n";
+            $this->battleLog [] = "<strong>⏳ Het maximum aantal rondes is bereikt. Het gevecht is geëindigd zonder winnaar.</strong><br>";
         }
 
         return $this->battleLog;
@@ -139,7 +218,7 @@ class Battle {
      * @return void
      */
     private function logAttack(Character $attacker, Character $defender, int $damage): void {
-        $this->battleLog .= "Ronde {$this->roundNumber}: {$attacker->getName()} valt aan en doet {$damage} schade aan {$defender->getName()}.\n";
-        $this->battleLog .= "{$defender->getName()} heeft nu {$defender->getHealth()} health.\n\n";
+        $this->battleLog [] = "Ronde {$this->roundNumber}: <strong>{$attacker->getName()}</strong> valt aan en doet <strong>{$damage}</strong> schade aan <strong>{$defender->getName()}</strong>.<br>";
+        $this->battleLog [] = "{$defender->getName()} heeft nu <strong>{$defender->getHealth()}</strong> health.\n\n";
     }
 }

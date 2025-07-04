@@ -24,6 +24,12 @@
             {if $character->getRole() == 'Healer' && $character->getSpirit() !== null}
                 <p class="card-text"><strong>Spirit:</strong> {$character->getSpirit()}</p>
             {/if}
+
+            <hr>
+            <div class="card-text">
+                <strong>Character Summary:</strong> 
+                <p>{$character->getSummary()}</p>
+            </div>
         </div>
         <div class="card-footer text-end">
             <a href="index.php?page=listCharacters" class="btn btn-secondary">Terug naar lijst</a>

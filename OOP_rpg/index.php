@@ -27,17 +27,17 @@ $template->setCompileDir(__DIR__ . '/templates_c');
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-try {
-    $database = new Mysql(
-        $_ENV['DB_HOST'],
-        $_ENV['DB_NAME'],
-        $_ENV['DB_USER'],
-        $_ENV['DB_PASS']
-    );
-    DatabaseManager::setIntance($database);
-} catch (PDOException $error) {
-    $dberror = $error->getMessage();
-}
+// try {
+//     $database = new Mysql(
+//         $_ENV['DB_HOST'],
+//         $_ENV['DB_NAME'],
+//         $_ENV['DB_USER'],
+//         $_ENV['DB_PASS']
+//     );
+//     DatabaseManager::setIntance($database);
+// } catch (PDOException $error) {
+//     $dberror = $error->getMessage();
+// }
 
 
 $characterList = $_SESSION['characterList'] ?? new CharacterList();
@@ -150,51 +150,126 @@ switch ($page) {
 
     case 'startBattle':
         $characterList = $_SESSION['characterList'] ?? new CharacterList();
-        $character1 = $characterList->getCharacter($_POST['character1']);
-        $character2 = $characterList->getCharacter($_POST['character2']);
 
-        if(!$character1 || !$character2) {
+        $name1 = $_POST['character1'] ?? '';
+        $name2 = $_POST['character2'] ?? '';
+
+        if (empty($name1) || empty($name2)) {
             $template->assign('error', 'One or both characters not found.');
             $template->display('error.tpl');
             break;
         }
-        $battle = new Battle();
-$maxRounds = isset($_POST['maxRounds']) ? (int)$_POST['maxRounds'] : 10;
-$battle->changeMaxRounds($maxRounds);
 
-        $battlelog = $battle->startFight($character1, $character2);
-    
+        $character1 = $characterList->getCharacter($name1);
+        $character2 = $characterList->getCharacter($name2);
 
-        $battleResult = $battle->getBattleLog();
-         if ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
-        $winner = $character1->getName();
-    } elseif ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
-        $winner = $character2->getName();
-    } else {
-        $winner = 'draw';
-    }
-        $battleSummary = $battleResult;
-        $characters = [
-            'character1' => [
-                'name' => $character1->getName(),
-                'health' => $character1->getHealth(),
-                'attack' => $character1->getAttack(),
-                'defense' => $character1->getDefense(),
-                'role' => $character1->getRole()
-            ],
-            'character2' => [
-                'name' => $character2->getName(),
-                'health' => $character2->getHealth(),
-                'attack' => $character2->getAttack(),
-                'defense' => $character2->getDefense(),
-                'role' => $character2->getRole()
-            ]
-        ];
-         $character1->setHealth($battle->getFighter1OriginalHealth());
-        $character2->setHealth($battle->getFighter2OriginalHealth());
+        if (!$character1 || !$character2) {
+            $template->assign('error', 'One or both characters not found.');
+            $template->display('error.tpl');
+            break;
+        }
+
+        $maxRounds = isset ($_POST['maxRounds']) ? (int) $_POST['maxRounds'] : 10;
+        $battle = new Battle($character1, $character2, $maxRounds);
+
+        $_SESSION['battle'] = $battle;
+
+        $template->assign('battle', $battle);
+
+        $template->display('battleResult.tpl');
 
 
+
+        
+        // if (empty($_POST['character1']) || empty($_POST['character2'])) {
+        //     echo "bla";
+        //     $template->assign('error', 'One or both characters not found.');
+        //     $template->display('error.tpl');
+        //     break;
+        // }
+        
+        // $character1 = $characterList->getCharacter($_POST['character1']);
+        // $character2 = $characterList->getCharacter($_POST['character2']);
+
+        // if (!$character1 || !$character2) {
+        //     $template->assign('error', 'One or both characters not found.');
+        //     $template->display('error.tpl');
+        //     break;
+        // }
+        
+        // $battle = new Battle();
+        // $maxRounds = isset($_POST['maxRounds']) ? (int) $_POST['maxRounds'] : 10;
+        // $battle->changeMaxRounds($maxRounds);
+
+
+        // $health1_before = $character1->getHealth();
+        // $health2_before = $character2->getHealth();
+
+        // // Start het gevecht
+        // $battleLog = $battle->startFight($character1, $character2);
+
+        // // Health na het gevecht
+        // $health1_after = $character1->getHealth();
+        // $health2_after = $character2->getHealth();
+
+
+
+        // if ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
+        //     $winner = $character1->getName();
+        // } elseif ($character1->getHealth() > 0 && $character2->getHealth() <= 0) {
+        //     $winner = $character2->getName();
+        // } else {
+        //     $winner = 'draw';
+        // }
+        // $battleSummary = $battleLog;
+        // $template->assign('character1', $character1);
+        // $template->assign('character2', $character2);
+        // $template->assign('health1_before', $health1_before);
+        // $template->assign('health2_before', $health2_before);
+        // $template->assign('health1_after', $health1_after);
+        // $template->assign('health2_after', $health2_after);
+        // $template->assign('winner', $winner);
+        // $template->assign('battleLog', $battleLog);
+        // $template->display('battleResult.tpl');
+
+
+        // $character1->setHealth($battle->getFighter1OriginalHealth());
+        // $character2->setHealth($battle->getFighter2OriginalHealth());
+
+        // $_SESSION['characterList'] = $characterList;
         break;
+
+    case 'battleRound':
+        if(!isset($_SESSION['battle']) || !$_SESSION['battle'] instanceof Battle)
+        {
+            $template->assign('error', 'No active battle found.');
+            $template->display('error.tpl');
+            break;
+        }
+        $battle = $_SESSION['battle'];
+
+        $battle->executeTurn($battle->getFighter1(), $battle->getFighter2());
+
+        $_SESSION['battle'] = $battle;
+
+        $template->assign('battle', $battle);
+
+        $template->display('battleResult.tpl');
+        break;
+
+    case 'resetHealth':
+        if (!isset($_SESSION['battle']) || !$_SESSION['battle'] instanceof Battle) {
+            $template->assign('error', 'No active battle found.');
+            $template->display('error.tpl');
+            break;
+        }
+        $battle = $_SESSION['battle'];
+        $battle->endBattle();
+        $_SESSION['battle'] = $battle;
+
+        header('Location: index.php?page=battleForm');
+        break;
+
     case 'testDatabase':
         if (DatabaseManager::getInstance()->testConnection()) {
             $template->assign('message', 'Database connection is working.');
@@ -325,7 +400,7 @@ $battle->changeMaxRounds($maxRounds);
 
 
 
-var_dump(DatabaseManager::getInstance());
+// var_dump(DatabaseManager::getInstance());
 $_SESSION['characterList'] = $characterList;
 
 

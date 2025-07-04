@@ -26,6 +26,13 @@ class Mage extends Character
         $this->mana = $mana;
     }
 
+        public function getSummary()
+    {
+        $parentSummary = parent::getSummary();
+        $manaInfo = "<br>Additionally, this Mage has {$this->mana} mana points.";
+        return $parentSummary . "". $manaInfo; 
+    }
+
     public function castFireball()
     {
         if ($this->mana < 30) {

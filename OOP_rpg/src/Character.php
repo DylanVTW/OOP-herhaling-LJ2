@@ -110,6 +110,11 @@ class Character
         return "Temporary stats modified: Attack +{$attackMod}, Defense +{$defenseMod}";
     }
 
+    public function getSummary()
+    {
+        return "Name: {$this->name}, Role: {$this->role}, Health: {$this->health}, Attack: {$this->getAttack()}, Defense: {$this->getDefense()}, Range: {$this->range}";
+    }
+
 }
 
 ?>
