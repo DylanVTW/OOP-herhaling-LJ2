@@ -16,6 +16,7 @@ use Game\Warrior;
 use Game\Mage;
 use Game\Rogue;
 use Game\Healer;
+use Game\Tank;
 
 session_start();
 
@@ -78,17 +79,23 @@ switch ($page) {
                 $character = new Healer($name, $role, $health, $attack, $defense, $range);
                 $character->setSpirit((int) ($_POST['spirit'] ?? 200));
                 break;
-            default:
-                $character = new Character($name, $role, $health, $attack, $defense, $range);
+            case 'Tank':
+                $character = new Tank($name, $role, $health, $attack, $defense, $range);
+                $character->setShield((int) ($_POST['shield'] ?? 150));
                 break;
+            default:
+                $template->assign('error', 'Onbekende of ongeldige character role. Kan geen character aanmaken.');
+                $template->display('error.tpl');
+                return;
+                
         }
 
         // Specifieke eigenschappen instellen voor Warrior en Mage
-        if ($_POST['role'] == 'Warrior' && isset($_POST['rage'])) {
+        if ($_POST['role'] == 'Warrior' && isset($_POST['rage']) && $character instanceof Game\Warrior) {
             $character->setRage($_POST['rage']);
         }
 
-        if ($_POST['role'] == 'Mage' && isset($_POST['mana'])) {
+        if ($_POST['role'] == 'Mage' && isset($_POST['mana']) && $character instanceof Game\Mage) {
             $character->setMana($_POST['mana']);
         }
         if ($_POST['role'] == 'Rogue' && isset($_POST['energy']) && $character instanceof Game\Rogue) {
@@ -96,6 +103,9 @@ switch ($page) {
         }
         if ($_POST['role'] == 'Healer' && isset($_POST['spirit']) && $character instanceof Game\Healer) {
             $character->setSpirit($_POST['spirit']);
+        }
+        if ($_POST['role'] == 'Tank' && isset($_POST['shield']) && $character instanceof Game\Tank) {
+            $character->setShield($_POST['shield']);
         }
 
         // Rest van de logica blijft ongewijzigd
@@ -248,13 +258,22 @@ switch ($page) {
         }
         $battle = $_SESSION['battle'];
 
+        $attack1 = $_POST['fighter1Attack'] ?? null;
+        $attack2 = $_POST['fighter2Attack'] ?? null;
+
+        $attack1 = ($attack1 === '' || $attack1 === 'normal') ? null : $attack1;
+        $attack2 = ($attack2 === '' || $attack2 === 'normal') ? null : $attack2;
+
+        $battle->setAttackForFighter($battle->getFighter2(), $attack1);
+        $battle->setAttackForFighter($battle->getFighter1(), $attack2);
+
         $battle->executeTurn($battle->getFighter1(), $battle->getFighter2());
 
         $_SESSION['battle'] = $battle;
 
         $template->assign('battle', $battle);
 
-        $template->display('battleResult.tpl');
+        $template->display(template: 'battleResult.tpl');
         break;
 
     case 'resetHealth':

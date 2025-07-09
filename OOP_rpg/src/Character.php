@@ -1,7 +1,7 @@
 <?php
 
 namespace Game;
-class Character
+abstract class Character 
 {
     // Basis properties als private properties
     private string $name;
@@ -15,6 +15,8 @@ class Character
     protected int $tempAttack = 0;
 
     protected int $tempDefense = 0;
+
+    protected array $specialAttacks = [];
 
     // Constructor vervangen door setCharacter methode
     public function __construct($name, $role, $health, $attack, $defense, $range)
@@ -63,6 +65,11 @@ class Character
     public function getRange()
     {
         return $this->range;
+    }
+
+    public function getSpecialAttacks()
+    {
+        return $this->specialAttacks;
     }
 
     // Setters voor alle properties
@@ -115,6 +122,15 @@ class Character
         return "Name: {$this->name}, Role: {$this->role}, Health: {$this->health}, Attack: {$this->getAttack()}, Defense: {$this->getDefense()}, Range: {$this->range}";
     }
 
+    public abstract function executeSpecialAttack(string $attackName): string;
+    
+
+    
+
+    public abstract function resetAttributes(): void;      
+    
+
+    
 }
 
 ?>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-02 20:25:11
+/* Smarty version 5.5.0, created on 2025-07-09 14:07:30
   from 'file:createCharacterForm.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_686595a7831647_46260661',
+  'unifunc' => 'content_686e77a283d0a6_56145233',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '95a1e7baa4ed5fc6cdca910e8d94a423a702a02d' => 
     array (
       0 => 'createCharacterForm.tpl',
-      1 => 1751487879,
+      1 => 1752070049,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_686595a7831647_46260661 (\Smarty\Template $_smarty_tpl) {
+function content_686e77a283d0a6_56145233 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1858162327686595a782f720_32936594', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_840877559686e77a283a732_67006806', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, 'layout.tpl', $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_1858162327686595a782f720_32936594 extends \Smarty\Runtime\Block
+class Block_840877559686e77a283a732_67006806 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
@@ -91,8 +91,11 @@ $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
             <div class="mb-3" id="spirit" style="display: none;">
                 <label for="spirit" class="form-label">spirit   </label>
                 <input type="number" class="form-control" id="spirit" name="spirit" min="0" max="200" value="200">
-            </div>                
-            
+            </div>     
+            <div class="mb-3" id="shieldField" style="display: none;">
+                <label for="shield" class="form-label">Shield</label>
+                <input type="number" class="form-control" id="shield" name="shield" min="0" max="300" value="150">
+            </div>
             <button type="submit" class="btn btn-primary w-100">Create Character</button>
         </form>
     </div>
@@ -106,6 +109,7 @@ $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
         document.getElementById('manaField').style.display = (role === 'Mage') ? 'block' : 'none';
         document.getElementById('energyField').style.display = (role === 'Rogue' ) ? 'block' : 'none';
         document.getElementById('spirit').style.display = (role === 'Healer') ? 'block' : 'none';
+        document.getElementById('shieldField').style.display = (role === 'Tank') ? 'block' : 'none';
     }
 
     document.getElementById('role').addEventListener('change', toggleFields);

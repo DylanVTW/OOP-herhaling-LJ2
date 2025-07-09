@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-02 20:25:09
+/* Smarty version 5.5.0, created on 2025-07-09 14:10:54
   from 'file:characterList.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_686595a504bc52_99857905',
+  'unifunc' => 'content_686e786e719066_72353223',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'dc61181a4a73b4952532af59e69ccc5089736030' => 
     array (
       0 => 'characterList.tpl',
-      1 => 1751487908,
+      1 => 1752070071,
       2 => 'file',
     ),
   ),
@@ -20,18 +20,18 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_686595a504bc52_99857905 (\Smarty\Template $_smarty_tpl) {
+function content_686e786e719066_72353223 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1645589942686595a502a3f1_21552510', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1442216957686e786e6fd180_80536568', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, 'layout.tpl', $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_1645589942686595a502a3f1_21552510 extends \Smarty\Runtime\Block
+class Block_1442216957686e786e6fd180_80536568 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
@@ -55,6 +55,7 @@ $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
                     <th>Mana</th>
                     <th>Energy</th>
                     <th>Spirit</th>
+                    <th>Shield</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,6 +106,14 @@ $foreach0DoElse = false;
                     <td>
                         <?php if ($_smarty_tpl->getValue('character')->getRole() == 'Healer' && $_smarty_tpl->getValue('character')->getSpirit() !== null) {?>
                             <?php echo $_smarty_tpl->getValue('character')->getSpirit();?>
+
+                        <?php } else { ?>
+                            -
+                        <?php }?>
+                    </td>
+                    <td>
+                        <?php if ($_smarty_tpl->getValue('character')->getRole() == 'Tank' && $_smarty_tpl->getValue('character')->getShield() !== null) {?>
+                            <?php echo $_smarty_tpl->getValue('character')->getShield();?>
 
                         <?php } else { ?>
                             -
