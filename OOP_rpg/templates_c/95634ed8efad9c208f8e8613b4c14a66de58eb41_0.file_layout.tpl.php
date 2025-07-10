@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-02 13:32:50
+/* Smarty version 5.5.0, created on 2025-07-09 21:03:30
   from 'file:layout.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_686535024909a5_53722572',
+  'unifunc' => 'content_686ed9222366a6_47300004',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '95634ed8efad9c208f8e8613b4c14a66de58eb41' => 
     array (
       0 => 'layout.tpl',
-      1 => 1751463057,
+      1 => 1752094439,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_686535024909a5_53722572 (\Smarty\Template $_smarty_tpl) {
+function content_686ed9222366a6_47300004 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -269,6 +269,9 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
               <a class="nav-link active" aria-current="page" href="index.php?page=battleForm">Battle Arena</a>
               </li>
               <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="index.php?page=characterStats">Character Statistics</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
               </li>
             </ul>
@@ -290,7 +293,7 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
     <!-- Begin page content -->
     <main class="flex-shrink-0">
       <div class="container"><?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_16414985526865350248b303_66013364', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1778006224686ed922231256_26497597', "content");
 ?>
 </div>
     </main>
@@ -308,7 +311,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1641498552686
 </html>
 <?php }
 /* {block "content"} */
-class Block_16414985526865350248b303_66013364 extends \Smarty\Runtime\Block
+class Block_1778006224686ed922231256_26497597 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-09 19:48:42
+/* Smarty version 5.5.0, created on 2025-07-09 20:37:58
   from 'file:battleResult.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_686ec79a92c4e9_64318820',
+  'unifunc' => 'content_686ed326b89553_00592317',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'd40afd7c89831d170249e983943427e1da6a7821' => 
     array (
       0 => 'battleResult.tpl',
-      1 => 1752090520,
+      1 => 1752093471,
       2 => 'file',
     ),
   ),
@@ -20,17 +20,17 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_686ec79a92c4e9_64318820 (\Smarty\Template $_smarty_tpl) {
+function content_686ed326b89553_00592317 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, true);
 ?>
  
 <?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_2048415226686ec79a90e005_60111102', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_386979795686ed326b6f989_73464099', "content");
 $_smarty_tpl->getInheritance()->endChild($_smarty_tpl, 'layout.tpl', $_smarty_current_dir);
 }
 /* {block "content"} */
-class Block_2048415226686ec79a90e005_60111102 extends \Smarty\Runtime\Block
+class Block_386979795686ed326b6f989_73464099 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
@@ -159,6 +159,9 @@ $_smarty_tpl->getSmarty()->getRuntime('Foreach')->restore($_smarty_tpl, 1);?>
       >Terug naar Character List</a
     >
   </div>
+  <div class="tenor-gif-embed" data-postid="10432020374864364761" data-share-method="host" data-aspect-ratio="1.02469" data-width="100%"><a href="https://tenor.com/view/faust-limbus-company-butterfly-fire-gif-10432020374864364761">Faust Limbus Company GIF</a>from <a href="https://tenor.com/search/faust-gifs">Faust GIFs</a></div> <?php echo '<script'; ?>
+ type="text/javascript" async src="https://tenor.com/embed.js"><?php echo '</script'; ?>
+>
 </div>
 <?php
 }

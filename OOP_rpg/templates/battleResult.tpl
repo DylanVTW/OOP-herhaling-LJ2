@@ -92,5 +92,6 @@
       >Terug naar Character List</a
     >
   </div>
+  <div class="tenor-gif-embed" data-postid="10432020374864364761" data-share-method="host" data-aspect-ratio="1.02469" data-width="100%"><a href="https://tenor.com/view/faust-limbus-company-butterfly-fire-gif-10432020374864364761">Faust Limbus Company GIF</a>from <a href="https://tenor.com/search/faust-gifs">Faust GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 </div>
 {/block}
