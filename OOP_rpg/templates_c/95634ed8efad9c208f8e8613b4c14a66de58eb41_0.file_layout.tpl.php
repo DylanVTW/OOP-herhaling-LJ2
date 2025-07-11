@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 5.5.0, created on 2025-07-09 21:03:30
+/* Smarty version 5.5.0, created on 2025-07-10 12:42:22
   from 'file:layout.tpl' */
 
 /* @var \Smarty\Template $_smarty_tpl */
 if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   'version' => '5.5.0',
-  'unifunc' => 'content_686ed9222366a6_47300004',
+  'unifunc' => 'content_686fb52e7593f4_60045671',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '95634ed8efad9c208f8e8613b4c14a66de58eb41' => 
     array (
       0 => 'layout.tpl',
-      1 => 1752094439,
+      1 => 1752150858,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->getCompiled()->isFresh($_smarty_tpl, array (
   array (
   ),
 ))) {
-function content_686ed9222366a6_47300004 (\Smarty\Template $_smarty_tpl) {
+function content_686fb52e7593f4_60045671 (\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';
 $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
 ?>
@@ -271,9 +271,20 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
               <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="index.php?page=characterStats">Character Statistics</a>
               </li>
+               <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php?page=createItem">
+                  Create Item
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.php?page=listItems">
+                  Item List
+                </a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
               </li>
+
             </ul>
             <form class="d-flex" role="search">
               <input
@@ -293,7 +304,7 @@ $_smarty_tpl->getInheritance()->init($_smarty_tpl, false);
     <!-- Begin page content -->
     <main class="flex-shrink-0">
       <div class="container"><?php 
-$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1778006224686ed922231256_26497597', "content");
+$_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1386710778686fb52e7585a7_58958915', "content");
 ?>
 </div>
     </main>
@@ -311,7 +322,7 @@ $_smarty_tpl->getInheritance()->instanceBlock($_smarty_tpl, 'Block_1778006224686
 </html>
 <?php }
 /* {block "content"} */
-class Block_1778006224686ed922231256_26497597 extends \Smarty\Runtime\Block
+class Block_1386710778686fb52e7585a7_58958915 extends \Smarty\Runtime\Block
 {
 public function callBlock(\Smarty\Template $_smarty_tpl) {
 $_smarty_current_dir = 'C:\\wamp64\\www\\Herhaling-LJ1\\OOP_rpg\\templates';

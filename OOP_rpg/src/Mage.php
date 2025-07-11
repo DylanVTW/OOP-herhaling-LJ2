@@ -52,7 +52,7 @@ class Mage extends Character
             throw new \Exception("Not enough mana to perform FrostNova attack.");
         }
 
-        $modMessage = $this->modifyTemporaryStats(0.4, 1.2);
+        $this->modifyTemporaryStats(0.4, 1.2);
         $this->mana -= 45;
 
         return "Casted FrostNova attack with {$this->tempAttack} power, Attack decreased by 60% and Defense increased by 20%";

@@ -36,17 +36,17 @@ $template->setCompileDir(__DIR__ . '/templates_c');
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// try {
-//     $database = new Mysql(
-//         $_ENV['DB_HOST'],
-//         $_ENV['DB_NAME'],
-//         $_ENV['DB_USER'],
-//         $_ENV['DB_PASS']
-//     );
-//     DatabaseManager::setIntance($database);
-// } catch (PDOException $error) {
-//     $dberror = $error->getMessage();
-// }
+try {
+    $database = new Mysql(
+        $_ENV['DB_HOST'],
+        $_ENV['DB_NAME'],
+        $_ENV['DB_USER'],
+        $_ENV['DB_PASS']
+    );
+    DatabaseManager::setIntance($database);
+} catch (PDOException $error) {
+    $dberror = $error->getMessage();
+}
 
 
 $characterList = $_SESSION['characterList'] ?? new CharacterList();
@@ -191,6 +191,11 @@ switch ($page) {
 
     $template->display('characterStatistics.tpl');
     break;
+    
+    case 'battleForm':
+    $template->assign('characters', $characterList->getCharacters());
+    $template->display('battleForm.tpl');
+    break;
 
     case 'startBattle':
         $characterList = $_SESSION['characterList'] ?? new CharacterList();
@@ -281,11 +286,12 @@ switch ($page) {
         $template->display('testDatabase.tpl');
         break;
     case 'createItem':
-        $template->display('createItem.tpl');
+        $template->display('createItemForm.tpl');
         break;
     case "saveItem":
         if (!empty($_POST['name']) && !empty($_POST['type']) && !empty($_POST['value'])) {
-            $item = new Item($_POST['name'], $_POST['type'], $_POST['value']);
+            $item = new Item($_POST['name'], $_POST['type'], (float)$_POST['value']);
+
             if ($item->save()) {
                 $template->assign('item', $item);
                 $template->display('itemCreated.tpl');
@@ -298,8 +304,8 @@ switch ($page) {
             $template->display('error.tpl');
         }
         break;
-    case 'listItem':
-        $itemlist = new ItemList();
+    case 'listItems':
+        $itemList = new ItemList();
         $params = [];
         if (!empty($_POST['id'])) {
             $params['id'] = (int) $_POST['id'];
@@ -324,17 +330,16 @@ switch ($page) {
         } else {
             $itemList->loadAllFromDatabase();
         }
-        $itemlist->loadAllFromDatabase();
-        $template->assign('items', $itemlist->getItems());
-        $template->assign('count', $itemlist->count());
+        $template->assign('items', $itemList->getItems());
+        $template->assign('count', $itemList->count());
         $template->display('itemList.tpl');
         break;
     case 'updateItem':
-        if (empty($_GET['id'])) {
+        if (!empty($_GET['id'])) {
             $item = Item::loadFromDatabase((int) $_GET['id']);
             if ($item !== null) {
                 $template->assign('item', $item);
-                $template->display('updateItem.tpl');
+                $template->display('updateItemForm.tpl');
             } else {
                 $template->assign('error', 'Item not found.');
                 $template->display('error.tpl');
@@ -378,6 +383,7 @@ switch ($page) {
             $item = Item::loadFromDatabase((int) $_POST['id']);
             if ($item !== null) {
                 if ($item->delete()) {
+                    $template->assign('item', $item);
                     $template->assign('message', 'Item deleted successfully.');
                     $template->display('itemDeleted.tpl');
                 } else {
